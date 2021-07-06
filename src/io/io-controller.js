@@ -48,7 +48,7 @@ class IOController {
         this._extraData = extraData;
 
         this._stashInitialSize = 1024 * 384;  // default initial size: 384KB
-        if (config.stashInitialSize != undefined && config.stashInitialSize > 0) {
+        if (config.stashInitialSize != undefined && config.stashInitialSize > 0) { // 缓存尺寸
             // apply from config
             this._stashInitialSize = config.stashInitialSize;
         }
@@ -216,7 +216,7 @@ class IOController {
         return this._loader.type;
     }
 
-    _selectSeekHandler() {
+    _selectSeekHandler() { // 更据不同的环境，选用不同的请求头配置函数 header: Header
         let config = this._config;
 
         if (config.seekType === 'range') {
@@ -236,7 +236,7 @@ class IOController {
         }
     }
 
-    _selectLoader() {
+    _selectLoader() { // 选择不同的的 stream loader
         if (this._config.customLoader != null) {
             this._loaderClass = this._config.customLoader;
         } else if (this._isWebSocketURL) {
@@ -271,7 +271,7 @@ class IOController {
         }
 
         this._speedSampler.reset();
-        if (!optionalFrom) {
+        if (!optionalFrom) { // 请求所有资源
             this._fullRequestFlag = true;
         }
 
@@ -452,7 +452,7 @@ class IOController {
         }
     }
 
-    _onLoaderChunkArrival(chunk, byteStart, receivedLength) {
+    _onLoaderChunkArrival(chunk, byteStart, receivedLength) { // fetch 请求到数据后的回调函数
         if (!this._onDataArrival) {
             throw new IllegalStateException('IOController: No existing consumer (onDataArrival) callback!');
         }
@@ -479,7 +479,7 @@ class IOController {
             }
         }
 
-        if (!this._enableStash) {  // disable stash
+        if (!this._enableStash) {  // disable stash 禁用缓存
             if (this._stashUsed === 0) {
                 // dispatch chunk directly to consumer;
                 // check ret value (consumed bytes) and stash unconsumed to stashBuffer
@@ -510,7 +510,7 @@ class IOController {
                 this._stashUsed -= consumed;
                 this._stashByteStart += consumed;
             }
-        } else {  // enable stash
+        } else {  // enable stash 启用缓存
             if (this._stashUsed === 0 && this._stashByteStart === 0) {  // seeked? or init chunk?
                 // This is the first chunk after seek action
                 this._stashByteStart = byteStart;

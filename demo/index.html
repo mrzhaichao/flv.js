@@ -62,7 +62,7 @@
 
         function flv_load() {
             console.log('isSupported: ' + flvjs.isSupported());
-            if (mediaSourceURL.className === '') {
+            if (mediaSourceURL.className === '') { // 请求 JSON
                 var url = document.getElementById('msURL').value;
     
                 var xhr = new XMLHttpRequest();
@@ -72,7 +72,7 @@
                     flv_load_mds(mediaDataSource);
                 }
                 xhr.send();
-            } else {
+            } else { // 直接URL
                 var i;
                 var mediaDataSource = {
                     type: 'flv'
