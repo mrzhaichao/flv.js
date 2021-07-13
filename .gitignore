@@ -181,5 +181,5 @@ pip-log.txt
 .DS_Store
 
 # Visual Studio Code
-.vscode/
+# .vscode/
 browse.VC.db
